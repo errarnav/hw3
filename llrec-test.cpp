@@ -67,9 +67,26 @@ void dealloc(Node* head)
 //   function object struct declarations
 // -----------------------------------------------
 
+// Functor to filter odd numbers
+struct IsOdd {
+    bool operator()(int val) {
+        return val % 2 == 1;
+    }
+};
 
+// Functor to filter even numbers
+struct IsEven {
+    bool operator()(int val) {
+        return val % 2 == 0;
+    }
+};
 
-
+// Functor to filter negative numbers
+struct IsNegative {
+    bool operator()(int val) {
+        return val < 0;
+    }
+};
 
 int main(int argc, char* argv[])
 {
@@ -86,10 +103,28 @@ int main(int argc, char* argv[])
     print(head);
 
     // Test out your linked list code
-
-
-
+    
+    // Test llpivot
+    cout << "\nTesting llpivot with pivot=5:" << endl;
+    Node* smaller = NULL;
+    Node* larger = NULL;
+    llpivot(head, smaller, larger, 5);
+    cout << "Smaller: ";
+    print(smaller);
+    cout << "Larger: ";
+    print(larger);
+    cout << "Original (should be empty): ";
+    print(head);
+    
+    // Test llfilter - filter odd numbers from smaller list
+    cout << "\nTesting llfilter (removing odd numbers from smaller list):" << endl;
+    smaller = llfilter(smaller, IsOdd());
+    cout << "After filtering odds: ";
+    print(smaller);
+    
+    // Clean up
+    dealloc(smaller);
+    dealloc(larger);
     
     return 0;
-
 }
